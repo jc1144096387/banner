@@ -33,8 +33,8 @@ DOM是JavaScript操控html元素的关键，毕竟你要操控html元素，需�
 
 
 #### 为元素添加事件监听
-function hover(){
-    
+
+function hover(){    
     // 事件监听要用匿名函数传参数
     bannerRight[0].addEventListener("mouseover",function(){mouseOver(0);clearInterval(auto_timer);});
     bannerRight[1].addEventListener("mouseover",function(){mouseOver(1);clearInterval(auto_timer);});
@@ -56,6 +56,7 @@ function hover(){
 注：当时为了快速实现功能，没有考虑全局变量带来的危害，本代码中大量使用了全局变量
 
 #### mouseOver()函数
+
 function mouseOver(i){
     // (function(i){
         for(let j = 0; j < 5; j ++){
@@ -69,7 +70,9 @@ function mouseOver(i){
 }
 该函数接受一个变量i(确定鼠标移入的是哪个图片),对包含左边大图片的数组进行遍历，如果是对应的大图片则调用getHover()函数，否则调用loseHover()函数，这个两个函数也接受一个变量，来确定对应图片
 
+
 #### getHover()函数
+
 function getHover(i){
     bannerLeft[i].style.zIndex = "1"; //设置z-index
     opacity(1,i); //调用函数设置透明度，为了实现透明度渐变特效，我们抽离出一个opacity()函数来实现功能
@@ -77,13 +80,17 @@ function getHover(i){
     flag = i; // 设置flag
 }
 
+
 #### loseHover()函数
+
 function loseHover(i){
     bannerLeft[i].style.zIndex = "-2";  
     bannerLeft[i].style.opacity = 0;
 }
 
+
 #### 实现透明渐变 opacity(target,i)函数
+
 var opacity_alpha = [1,0,0,0,0];    //存放对应图片的透明度
 var opacity_speed = 0;  //渐变速度，通过设置正负来控制透明度增加还是减少，注：上面的轮播中只使用了透明度增加，因为淡入和淡出同时存在效果不是很好，就没用淡出，懒得改代码这个函数就保持原样了。
 var opacity_timer = null; // 计时器
@@ -105,23 +112,21 @@ function opacity(target,i){
             opacity_speed = 0;
             clearInterval(opacity_timer);
         }else{
-            opacity_alpha[i] += opacity_speed;
-            
+            opacity_alpha[i] += opacity_speed;   
             bannerLeft[i].style.opacity = opacity_alpha[i];
         }
-
     },30);
 }
 
 
 #### 实现滑块滑动 blockSwitch(i)函数
+
 var switch_marginTop = 0;
 var switch_speed = 0;
 var switch_timer = null;
 var switch_target = 0;
 var switchBlock = document.getElementsByClassName("hover-bg");
 function blockSwitch(i){
-    
     switch_target = 60 * i;
     clearInterval(switch_timer);
     switch_timer = setInterval(function(){
@@ -145,7 +150,10 @@ function blockSwitch(i){
 透明度渐变是使用计时器实现透明度的逐渐增加或减少，
 滑块滑动则是使用计时器实现marginTop属性的逐渐增加或减少，直到目标位置
 
+
+
 #### 自动轮播 auto()函数
+
 var flag = 1;
 var auto_timer = null;
 function auto(){
